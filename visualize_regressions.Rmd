@@ -95,7 +95,7 @@ summary: `lm()` and `allEffects()` produce the same pairwise effects within all 
 
 ```{r cat2_2}
 #proof that estimate of the first level of the first factor differs between `lm()` and `allEffects()`
-f1l1_allEffects <- cat2_m %>% allEffects() %>% pluck("jobclass") %>% as_tibble() %>% filter(jobclass == '1. Industrial') %>%  select(fit)
+f1l1_allEffects <- cat2_m %>% allEffects() %>% pluck("education") %>% as_tibble() %>% filter(education == '1. < HS Grad') %>%  select(fit)
 
 f1l1_lm <- cat2_m %>% tidy() %>% filter(term == '(Intercept)') %>%  select(estimate)
 
