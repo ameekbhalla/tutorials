@@ -1,13 +1,14 @@
 ---
 title: "Visualization of regression models"
 output:
-  pdf_document:
-    toc: yes
-  word_document:
-    toc: yes
+  # pdf_document:
+  #   toc: yes
+  # word_document:
+  #   toc: yes
   html_document:
     toc: yes
     toc_float: yes
+    keep_md: yes
 editor_options:
   chunk_output_type: console
 ---
