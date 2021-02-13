@@ -5,6 +5,7 @@ output:
   #   toc: true #does not render floating toc
   bookdown::tufte_html2:
     toc: yes #does not render floating toc
+    keep_md: yes
 ---
 
 ## How does Git store information?

@@ -2,21 +2,9 @@
 title: "Using Git"
 output:
   # github_document:
-<<<<<<< HEAD
   #   toc: true #does not render floating toc
   bookdown::tufte_html2:
     toc: yes #does not render floating toc
-=======
-<<<<<<< HEAD:git.Rmd
-  #   toc: true #does not render floating toc
-  bookdown::tufte_html2:
-    toc: yes #does not render floating toc
-=======
-  #   toc: true
-  bookdown::tufte_html2:
-    toc: yes
->>>>>>> f335c67ea31d0d033b3c20a3a79995f45de8fe07:git.md
->>>>>>> f335c67ea31d0d033b3c20a3a79995f45de8fe07
     keep_md: yes
 ---
 
