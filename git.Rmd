@@ -1,11 +1,11 @@
 ---
 title: "Using Git"
 output:
-  # github_document:
-  #   toc: true #does not render floating toc
-  bookdown::tufte_html2:
-    toc: yes #does not render floating toc
-    keep_md: yes
+  github_document:
+    toc: true #does not render floating toc
+  # bookdown::tufte_html2:
+  #   toc: yes #does not render floating toc
+  #   keep_md: yes #renders on GitHub but with an ugly YAML table on top
 ---
 
 ## How does Git store information?
