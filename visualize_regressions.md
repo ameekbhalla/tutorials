@@ -5,12 +5,10 @@ output:
   #   toc: yes
   # word_document:
   #   toc: yes
-  # html_document:
-  #   toc: yes
-  #   toc_float: yes
-  #   keep_md: yes
-  bookdown::tufte_html2:
-    keep_md: True
+  html_document:
+    toc: yes
+    toc_float: yes
+    keep_md: yes
 editor_options:
   chunk_output_type: console
 ---
@@ -804,7 +802,7 @@ cat1_m %>% tidy() %>% gt()
 plot(allEffects(cat1_m)) 
 ```
 
-<img src="visualize_regressions_files/figure-html/cat1-1.png"  />
+![](visualize_regressions_files/figure-html/cat1-1.png)<!-- -->
 
 # 2. Simple linear model with one numeric predictor
 1. `allEffects()` derives fitted-y values against multiple equidistant values ("pseudo-levels") of the numeric predictor, thus plotting the effect of the predictor at multiple levels 
@@ -1594,7 +1592,7 @@ num1_m %>% tidy() %>% gt()
 plot(allEffects(num1_m))
 ```
 
-<img src="visualize_regressions_files/figure-html/num1-1.png"  />
+![](visualize_regressions_files/figure-html/num1-1.png)<!-- -->
 
 ```r
 # plot(allEffects(num1_m), grid = TRUE) # overlays a grid on the plot
@@ -1610,14 +1608,14 @@ cat2_m <- lm(salary ~ jobclass + education, d)
 plot(allEffects(cat2_m)) 
 ```
 
-<img src="visualize_regressions_files/figure-html/cat2_1-1.png"  />
+![](visualize_regressions_files/figure-html/cat2_1-1.png)<!-- -->
 
 ```r
 #makes one plot: for the specified predictor
 plot(predictorEffect(predictor = "education", mod = cat2_m))
 ```
 
-<img src="visualize_regressions_files/figure-html/cat2_1-2.png"  />
+![](visualize_regressions_files/figure-html/cat2_1-2.png)<!-- -->
 
 ## Only the way `allEffects()` & `lm()` display their results differs, the underlying estimates (coefficients) are same {#cat2.1}
 1. with `lm()` the output is NOT displayed in terms of estimates (coefficients), rather each factor gets a separate baseline and the values of all other levels within a factor are displayed relative to the within-factor baseline (i.e. against the respective first level). Thus, `lm()` puts out effects sizes rather than coefficients.
@@ -4420,14 +4418,14 @@ num2_m <- lm(salary ~ age + year, d)
 plot(allEffects(num2_m)) 
 ```
 
-<img src="visualize_regressions_files/figure-html/num2_2-1.png"  />
+![](visualize_regressions_files/figure-html/num2_2-1.png)<!-- -->
 
 ```r
 # `allEffects()` can add bar-type CIs around fitted-y values corresponding to different "pseudo-levels" of the numeric predictor. This allows comparisons of the effects at the different "pseudo-levels" of the numeric predictor.
 plot(allEffects(num2_m), confint=list(style='bars'))
 ```
 
-<img src="visualize_regressions_files/figure-html/num2_2-2.png"  />
+![](visualize_regressions_files/figure-html/num2_2-2.png)<!-- -->
 
 3. `sjPlot::plot_model()` plots the coefficients, while `effects::allEffects()` displays model predictions (fitted values)
 
@@ -4438,7 +4436,7 @@ library(sjPlot)
 plot_model(num2_m)
 ```
 
-<img src="visualize_regressions_files/figure-html/num_2_3-1.png"  />
+![](visualize_regressions_files/figure-html/num_2_3-1.png)<!-- -->
 
 
 # 5. Multiple linear model with one categorical and one numeric predictor {#multiple_plots}
@@ -4453,13 +4451,13 @@ cat_num_m <- lm(salary ~ age + education, d)
 plot(allEffects(cat_num_m))
 ```
 
-<img src="visualize_regressions_files/figure-html/cat_num_1-1.png"  />
+![](visualize_regressions_files/figure-html/cat_num_1-1.png)<!-- -->
 
 ```r
 plot(allEffects(cat_num_m), rows = 2, cols = 1)
 ```
 
-<img src="visualize_regressions_files/figure-html/cat_num_1-2.png"  />
+![](visualize_regressions_files/figure-html/cat_num_1-2.png)<!-- -->
 
 2. `plot_model()` arguments can be tweaked to display coefficient values and their significance
 
@@ -4469,7 +4467,7 @@ plot(allEffects(cat_num_m), rows = 2, cols = 1)
 plot_model(cat_num_m, show.values = T)
 ```
 
-<img src="visualize_regressions_files/figure-html/cat_num_2-1.png"  />
+![](visualize_regressions_files/figure-html/cat_num_2-1.png)<!-- -->
 
 # Bonus 1: check all the model assumptions and performance in one multi-plot figure
 1. the VIF (y-axis in the multicollinearity plot) should be below 5 for factors and below 10 for interactions 
@@ -4482,7 +4480,7 @@ library(performance)
 check_model(cat_num_m)
 ```
 
-<img src="visualize_regressions_files/figure-html/bonus_1-1.png"  />
+![](visualize_regressions_files/figure-html/bonus_1-1.png)<!-- -->
 
 ```r
 # the VIF (y-axis in the multicollinearity plot) should be below 5 for factors and below 10 for interactions 
@@ -5395,7 +5393,7 @@ inter_m %>% tidy() %>% gt() %>% tab_header(data = ., title = "job*education_lm")
 plot(allEffects(inter_m))
 ```
 
-<img src="visualize_regressions_files/figure-html/inter_2-1.png"  />
+![](visualize_regressions_files/figure-html/inter_2-1.png)<!-- -->
 
 3. `allEffects()` can also be used to produce conventional interaction plots where multiple predictors are displayed in the same plot rather than in facets and their respective levels are joined by a line 
 
@@ -5404,7 +5402,7 @@ plot(allEffects(inter_m))
 plot(allEffects(inter_m), lines = list(multiline = T))
 ```
 
-<img src="visualize_regressions_files/figure-html/inter_3-1.png"  />
+![](visualize_regressions_files/figure-html/inter_3-1.png)<!-- -->
 
 ```r
 # remakes the above plot with CIs
@@ -5413,14 +5411,14 @@ plot(allEffects(inter_m),
      confint = list(style = "auto"))
 ```
 
-<img src="visualize_regressions_files/figure-html/inter_3-2.png"  />
+![](visualize_regressions_files/figure-html/inter_3-2.png)<!-- -->
 
 ```r
 #an alternative to above
 plot_model(inter_m, type = "int")
 ```
 
-<img src="visualize_regressions_files/figure-html/inter_3-3.png"  />
+![](visualize_regressions_files/figure-html/inter_3-3.png)<!-- -->
 
 # Bonus 2: post-hoc comparisons
 1. We use the `emmeans` package for this. Marginal means are also called least-squares means.
@@ -7259,7 +7257,7 @@ plot(
   confint = list(style = "auto"))
 ```
 
-<img src="visualize_regressions_files/figure-html/cat_num_inter-1.png"  />
+![](visualize_regressions_files/figure-html/cat_num_inter-1.png)<!-- -->
 
 ```r
 plot_model(cat_num_inter, type = "int") + 
@@ -7268,13 +7266,13 @@ plot_model(cat_num_inter, type = "int") +
   xlab("something different")
 ```
 
-<img src="visualize_regressions_files/figure-html/cat_num_inter-2.png"  />
+![](visualize_regressions_files/figure-html/cat_num_inter-2.png)<!-- -->
 
 ```r
 check_model(cat_num_inter)
 ```
 
-<img src="visualize_regressions_files/figure-html/cat_num_inter-3.png"  />
+![](visualize_regressions_files/figure-html/cat_num_inter-3.png)<!-- -->
 
 # Bonus 3: make quick non-linear models with ggplot::geom_smooth()
 
@@ -7285,7 +7283,7 @@ ggplot(d, aes(age, salary)) +
   facet_grid(jobclass~health) # quick multiple model visualization
 ```
 
-<img src="visualize_regressions_files/figure-html/ggplot_gam-1.png"  />
+![](visualize_regressions_files/figure-html/ggplot_gam-1.png)<!-- -->
 
 # 8. Multiple non-linear polynomial model with interactions
 1. We logarithmize `salary`, use polynomial function of `age`, and check for interaction with `health. This helps to reduce VIF between the interaction terms as well as to normalize the residuals as revealed by `check_model()`
@@ -7302,19 +7300,19 @@ plot(
 )
 ```
 
-<img src="visualize_regressions_files/figure-html/polynomial-1.png"  />
+![](visualize_regressions_files/figure-html/polynomial-1.png)<!-- -->
 
 ```r
 plot_model(polynomial_m, show.values = T)
 ```
 
-<img src="visualize_regressions_files/figure-html/polynomial-2.png"  />
+![](visualize_regressions_files/figure-html/polynomial-2.png)<!-- -->
 
 ```r
 check_model(polynomial_m)
 ```
 
-<img src="visualize_regressions_files/figure-html/polynomial-3.png"  />
+![](visualize_regressions_files/figure-html/polynomial-3.png)<!-- -->
 
 # 9. Multiple non-linear Generalized Additive Models (GAMs)
 1. A GAM cuts the x-axis into several pieces and plots a simple linear model to every piece and then it connects the pieces. `ggplot::geom_smooth()` also does this.
@@ -7331,13 +7329,13 @@ logistic_m <- glm(health ~ jobclass * health_ins, d, family = binomial)
 plot(allEffects(logistic_m))
 ```
 
-<img src="visualize_regressions_files/figure-html/logistic-1.png"  />
+![](visualize_regressions_files/figure-html/logistic-1.png)<!-- -->
 
 ```r
 plot_model(logistic_m, type = "int")
 ```
 
-<img src="visualize_regressions_files/figure-html/logistic-2.png"  />
+![](visualize_regressions_files/figure-html/logistic-2.png)<!-- -->
 
 ```r
 emmeans(logistic_m, pairwise ~ jobclass | health_ins, adjust = "fdr")$contrasts
@@ -7401,7 +7399,7 @@ emmeans(logistic_m, pairwise ~  health_ins * jobclass, adjust = "fdr")$contrasts
 pwpp(emmeans(logistic_m, ~  health_ins * jobclass), type = "response", adjust = "fdr") + theme_minimal()
 ```
 
-<img src="visualize_regressions_files/figure-html/pwpp-1.png"  />
+![](visualize_regressions_files/figure-html/pwpp-1.png)<!-- -->
 
 # 11. Multinomial logistic regression models via neural networks
 For categorical response variables with more than two categories we perform multinomial regression.
@@ -7425,7 +7423,7 @@ multinomial_m <- nnet::multinom(prog ~ ses + write, d)
 plot(allEffects(multinomial_m))
 ```
 
-<img src="visualize_regressions_files/figure-html/multinomial-1.png"  />
+![](visualize_regressions_files/figure-html/multinomial-1.png)<!-- -->
 
 ```r
 plot(allEffects(multinomial_m),
@@ -7433,7 +7431,7 @@ plot(allEffects(multinomial_m),
   confint = list(style = "auto"))
 ```
 
-<img src="visualize_regressions_files/figure-html/multinomial-2.png"  />
+![](visualize_regressions_files/figure-html/multinomial-2.png)<!-- -->
 
 # 12. Multiple Linear Mixed-Effects-Model with interactions
 
@@ -7453,7 +7451,7 @@ linear_m <- lm(y ~service * studage, data = d) #for ANOVA in Bonus 5
 plot(allEffects(mixed_m))
 ```
 
-<img src="visualize_regressions_files/figure-html/lmer-1.png"  />
+![](visualize_regressions_files/figure-html/lmer-1.png)<!-- -->
 
 ```r
 plot(
@@ -7462,7 +7460,7 @@ plot(
   confint = list(style = "auto"))
 ```
 
-<img src="visualize_regressions_files/figure-html/lmer-2.png"  />
+![](visualize_regressions_files/figure-html/lmer-2.png)<!-- -->
 
 ```r
 # post-hocs
@@ -7493,7 +7491,7 @@ emmeans(mixed_m, pairwise ~ service | studage, adjust = "none")$contrasts
 pwpp(emmeans(mixed_m, ~ service * studage), type = "response", adjust = "none") + theme_minimal()
 ```
 
-<img src="visualize_regressions_files/figure-html/lmer-3.png"  />
+![](visualize_regressions_files/figure-html/lmer-3.png)<!-- -->
 
 # Bonus 5: how to choose the best model
 Compare AIC & BIC obtained from between-model ANOVA: lower is better.
