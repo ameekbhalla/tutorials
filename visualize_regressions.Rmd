@@ -20,7 +20,8 @@ output:
 knitr::opts_chunk$set(
 	echo = TRUE, #show output
 	message = FALSE, #don't show messages
-	warning = FALSE #don't show warnings
+	warning = FALSE, #don't show warnings
+	fig.path = "visualize_regressions_files/figure-html"
 )
 ```
 
