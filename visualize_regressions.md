@@ -9,6 +9,7 @@ output:
     toc: yes
     toc_float: yes
     keep_md: yes #renders on GitHub but with an ugly YAML table on top
+    self-contained: false
   github_document:
     toc: true #does not render floating toc
 ---
