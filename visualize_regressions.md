@@ -1,25 +1,16 @@
----
-title: "Visualization of regression models"
-output:
-  # pdf_document:
-  #   toc: yes
-  # word_document:
-  #   toc: yes
-  html_document:
-    toc: yes
-    toc_float: yes
-    keep_md: yes
-editor_options:
-  chunk_output_type: console
----
+Visualization of regression models
+================
 
+Two-part tutorial
+([part 1](https://www.youtube.com/watch?v=BNTn_f43U04),
+[part 2](https://www.youtube.com/watch?v=wev5a3rwsvo)) by Yury Zablotski
+on how to visualize a wide variety of regression models, including
+linear, polynomial, logistic, multinomial, mixed models.
 
+He works on the `Wage` data set that comes with the ISLR package. Only
+1000 observations from the `Wage` package are sampled.
 
-Two-part tutorial ([part 1](https://www.youtube.com/watch?v=BNTn_f43U04), [part 2](https://www.youtube.com/watch?v=wev5a3rwsvo)) by Yury Zablotski on how to visualize a wide variety of regression models, including linear, polynomial, logistic, multinomial, mixed models.
-
-He works on the `Wage` data set that comes with the ISLR package. Only 1000 observations from the `Wage` package are sampled.
-
-```r
+``` r
 library(tidyverse)
 library(broom)
 library(gt)
@@ -32,12 +23,18 @@ d <- Wage %>%
   rename(salary = wage)
 ```
 
-# 1. Simple linear model with one categorical predictor
-1. `effects::allEffects()` computes the mean values for each level of the categorical predictor
-2. `lm()` computes mean values for each level of a predictor relative to its first level
-3. enclosing`allEffects()` within `base::plot()` allows plotting of the mean of the various levels of the predictor
+# 1\. Simple linear model with one categorical predictor
 
-```r
+1.  `effects::allEffects()` computes the mean values for each level of
+    the categorical predictor
+2.  `lm()` computes mean values for each level of a predictor relative
+    to its first level
+3.  enclosing`allEffects()` within `base::plot()` allows plotting of the
+    mean of the various levels of the predictor
+
+<!-- end list -->
+
+``` r
 # 1. simple linear model with one categorical predictor
 cat1_m <- lm(salary ~ jobclass, d)
 
@@ -48,15 +45,12 @@ library(effects)
 cat1_m %>% allEffects() %>% names()
 ```
 
-```
-## [1] "jobclass"
-```
+    ## [1] "jobclass"
 
-```r
+``` r
 cat1_m %>% allEffects() %>% pluck("jobclass") %>% as_tibble() %>% gt()
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -423,13 +417,11 @@ cat1_m %>% allEffects() %>% pluck("jobclass") %>% as_tibble() %>% gt()
   
   
 </table></div>
-```
 
-```r
+``` r
 cat1_m %>% tidy() %>% gt()
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -796,19 +788,24 @@ cat1_m %>% tidy() %>% gt()
   
   
 </table></div>
-```
 
-```r
+``` r
 plot(allEffects(cat1_m)) 
 ```
 
-![](visualize_regressions_files/figure-html/cat1-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/cat1-1.png)<!-- -->
 
-# 2. Simple linear model with one numeric predictor
-1. `allEffects()` derives fitted-y values against multiple equidistant values ("pseudo-levels") of the numeric predictor, thus plotting the effect of the predictor at multiple levels 
-2. `lm()` estimates the slope of the whole line (i.e. it estimates model coefficient not fitted values)
+# 2\. Simple linear model with one numeric predictor
 
-```r
+1.  `allEffects()` derives fitted-y values against multiple equidistant
+    values (“pseudo-levels”) of the numeric predictor, thus plotting the
+    effect of the predictor at multiple levels
+2.  `lm()` estimates the slope of the whole line (i.e. it estimates
+    model coefficient not fitted values)
+
+<!-- end list -->
+
+``` r
 # 2. simple linear model with one numeric predictor
 num1_m <- lm(salary ~ age, d)
 
@@ -817,15 +814,12 @@ num1_m <- lm(salary ~ age, d)
 num1_m %>% allEffects() %>% names()
 ```
 
-```
-## [1] "age"
-```
+    ## [1] "age"
 
-```r
+``` r
 num1_m %>% allEffects() %>% pluck("age") %>% as_tibble() %>% gt()
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -1213,13 +1207,11 @@ num1_m %>% allEffects() %>% pluck("age") %>% as_tibble() %>% gt()
   
   
 </table></div>
-```
 
-```r
+``` r
 num1_m %>% tidy() %>% gt()
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -1586,21 +1578,20 @@ num1_m %>% tidy() %>% gt()
   
   
 </table></div>
-```
 
-```r
+``` r
 plot(allEffects(num1_m))
 ```
 
-![](visualize_regressions_files/figure-html/num1-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/num1-1.png)<!-- -->
 
-```r
+``` r
 # plot(allEffects(num1_m), grid = TRUE) # overlays a grid on the plot
 ```
 
-# 3. Multiple linear model with two categorical predictors
+# 3\. Multiple linear model with two categorical predictors
 
-```r
+``` r
 # 3. multiple linear model with two categorical predictors
 cat2_m <- lm(salary ~ jobclass + education, d)
 
@@ -1608,25 +1599,42 @@ cat2_m <- lm(salary ~ jobclass + education, d)
 plot(allEffects(cat2_m)) 
 ```
 
-![](visualize_regressions_files/figure-html/cat2_1-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/cat2_1-1.png)<!-- -->
 
-```r
+``` r
 #makes one plot: for the specified predictor
 plot(predictorEffect(predictor = "education", mod = cat2_m))
 ```
 
-![](visualize_regressions_files/figure-html/cat2_1-2.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/cat2_1-2.png)<!-- -->
 
-## Only the way `allEffects()` & `lm()` display their results differs, the underlying estimates (coefficients) are same {#cat2.1}
-1. with `lm()` the output is NOT displayed in terms of estimates (coefficients), rather each factor gets a separate baseline and the values of all other levels within a factor are displayed relative to the within-factor baseline (i.e. against the respective first level). Thus, `lm()` puts out effects sizes rather than coefficients.
-2. with 0 or -1 in the formula, `lm()` does not give the first factor a baseline, i.e. the values of its levels are displayed relative to zero; however, the second factor still gets a baseline, i.e. its values are displayed relative to its first level.
-3. with `allEffects()`, neither of the factors get a baseline and the values of all levels within a factor are displayed relative to zero
-4. irrespective of the displayed values, all the effects (i.e. pairwise difference relative to baseline) are identical for `lm()` and `allEffects()`. Only the estimate (i.e. the coefficient) of the first level of the first factor is different.
-5. to calculate the estimates (coefficients) from the `lm()` output just add the relevant values together
-summary: `lm()` and `allEffects()` produce the same pairwise effects within all factors (i.e. differences from the respective baselines), but the estimate of first level of the first factor is different
+## Only the way `allEffects()` & `lm()` display their results differs, the underlying estimates (coefficients) are same
 
+1.  with `lm()` the output is NOT displayed in terms of estimates
+    (coefficients), rather each factor gets a separate baseline and the
+    values of all other levels within a factor are displayed relative to
+    the within-factor baseline (i.e. against the respective first
+    level). Thus, `lm()` puts out effects sizes rather than
+    coefficients.
+2.  with 0 or -1 in the formula, `lm()` does not give the first factor a
+    baseline, i.e. the values of its levels are displayed relative to
+    zero; however, the second factor still gets a baseline, i.e. its
+    values are displayed relative to its first level.
+3.  with `allEffects()`, neither of the factors get a baseline and the
+    values of all levels within a factor are displayed relative to zero
+4.  irrespective of the displayed values, all the effects (i.e. pairwise
+    difference relative to baseline) are identical for `lm()` and
+    `allEffects()`. Only the estimate (i.e. the coefficient) of the
+    first level of the first factor is different.
+5.  to calculate the estimates (coefficients) from the `lm()` output
+    just add the relevant values together summary: `lm()` and
+    `allEffects()` produce the same pairwise effects within all factors
+    (i.e. differences from the respective baselines), but the estimate
+    of first level of the first factor is different
 
-```r
+<!-- end list -->
+
+``` r
 #proof that estimate of the first level of the first factor differs between `lm()` and `allEffects()`
 f1l1_allEffects <- cat2_m %>% allEffects() %>% pluck("education") %>% as_tibble() %>% filter(education == '1. < HS Grad') %>%  select(fit)
 
@@ -1635,20 +1643,21 @@ f1l1_lm <- cat2_m %>% tidy() %>% filter(term == '(Intercept)') %>%  select(estim
 isTRUE(f1l1_allEffects != f1l1_lm)
 ```
 
-```
-## [1] TRUE
-```
+    ## [1] TRUE
 
 ## The effects values produced by the additive and the standalone models differ
-1. the value of `jobclass` when education is present in the model is different from its value when education is absent
-2. the value of education when `jobclass` is present in the model is different from its value when `jobclass` is absent
 
+1.  the value of `jobclass` when education is present in the model is
+    different from its value when education is absent
+2.  the value of education when `jobclass` is present in the model is
+    different from its value when `jobclass` is absent
 
-```r
+<!-- end list -->
+
+``` r
 lm(salary ~ jobclass, d) %>% allEffects() %>% pluck("jobclass")  %>% as_tibble() %>% gt() %>% tab_header(data = ., title = "job_alone_allEffects")
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -2022,13 +2031,11 @@ lm(salary ~ jobclass, d) %>% allEffects() %>% pluck("jobclass")  %>% as_tibble()
   
   
 </table></div>
-```
 
-```r
+``` r
 lm(salary ~ jobclass + education, d) %>% allEffects() %>% pluck("jobclass")  %>% as_tibble() %>% gt() %>% tab_header(data = ., title = "job_additive_allEffects")
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -2402,13 +2409,11 @@ lm(salary ~ jobclass + education, d) %>% allEffects() %>% pluck("jobclass")  %>%
   
   
 </table></div>
-```
 
-```r
+``` r
 lm(salary ~ education, d) %>% allEffects() %>% pluck("education") %>% as_tibble() %>% gt() %>% tab_header(data = ., title = "edu_alone_allEffects")
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -2803,13 +2808,11 @@ lm(salary ~ education, d) %>% allEffects() %>% pluck("education") %>% as_tibble(
   
   
 </table></div>
-```
 
-```r
+``` r
 lm(salary ~ jobclass + education, d) %>% allEffects() %>% pluck("education")  %>% as_tibble() %>% gt() %>% tab_header(data = ., title = "edu_additive_allEffects")
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -3204,15 +3207,19 @@ lm(salary ~ jobclass + education, d) %>% allEffects() %>% pluck("education")  %>
   
   
 </table></div>
-```
 
-3. apart from the estimate of factor 1, level 1 in the additive model, `lm()` produces effects identical to the corresponding `allEffects()` models. Observe that effects in `alone_lm` models correspond to the effects in `alone_allEffects` models. Similarly, `additive_lm` effects correspond to `additive_allEffects` effects.
+3.  apart from the estimate of factor 1, level 1 in the additive model,
+    `lm()` produces effects identical to the corresponding
+    `allEffects()` models. Observe that effects in `alone_lm` models
+    correspond to the effects in `alone_allEffects` models. Similarly,
+    `additive_lm` effects correspond to `additive_allEffects` effects.
 
-```r
+<!-- end list -->
+
+``` r
 lm(salary ~ jobclass, d) %>% tidy() %>% gt() %>% tab_header(data = ., title = "job_alone_lm")
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -3586,13 +3593,11 @@ lm(salary ~ jobclass, d) %>% tidy() %>% gt() %>% tab_header(data = ., title = "j
   
   
 </table></div>
-```
 
-```r
+``` r
 lm(salary ~ education, d) %>% tidy() %>% gt() %>% tab_header(data = ., title = "edu_alone_lm")
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -3987,13 +3992,11 @@ lm(salary ~ education, d) %>% tidy() %>% gt() %>% tab_header(data = ., title = "
   
   
 </table></div>
-```
 
-```r
+``` r
 lm(salary ~ jobclass + education, d) %>% tidy() %>% gt() %>% tab_header(data = ., title = "additive_lm")
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -4395,13 +4398,15 @@ lm(salary ~ jobclass + education, d) %>% tidy() %>% gt() %>% tab_header(data = .
   
   
 </table></div>
-```
 
-# 4. Multiple linear model with two numeric predictors
-1. the effect of `age` when `year` is present in the model is different from its effect when `year` is absent
+# 4\. Multiple linear model with two numeric predictors
 
+1.  the effect of `age` when `year` is present in the model is different
+    from its effect when `year` is absent
 
-```r
+<!-- end list -->
+
+``` r
 # 4. multiple linear model with two numeric predictors
 num2_m <- lm(salary ~ age + year, d)
 
@@ -4410,40 +4415,48 @@ num2_m <- lm(salary ~ age + year, d)
 # num2_m %>% lm() %>% gt()
 ```
 
-2. `allEffects()` can add bar-type CIs around fitted-y values corresponding to different "pseudo-levels" of the numeric predictor. This allows comparisons of the effects at the different "pseudo-levels" of the numeric predictor.
+2.  `allEffects()` can add bar-type CIs around fitted-y values
+    corresponding to different “pseudo-levels” of the numeric predictor.
+    This allows comparisons of the effects at the different
+    “pseudo-levels” of the numeric predictor.
 
+<!-- end list -->
 
-```r
+``` r
 # makes two plots one for each numerical predictor, with CI as a ribbon around the regression line
 plot(allEffects(num2_m)) 
 ```
 
-![](visualize_regressions_files/figure-html/num2_2-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/num2_2-1.png)<!-- -->
 
-```r
+``` r
 # `allEffects()` can add bar-type CIs around fitted-y values corresponding to different "pseudo-levels" of the numeric predictor. This allows comparisons of the effects at the different "pseudo-levels" of the numeric predictor.
 plot(allEffects(num2_m), confint=list(style='bars'))
 ```
 
-![](visualize_regressions_files/figure-html/num2_2-2.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/num2_2-2.png)<!-- -->
 
-3. `sjPlot::plot_model()` plots the coefficients, while `effects::allEffects()` displays model predictions (fitted values)
+3.  `sjPlot::plot_model()` plots the coefficients, while
+    `effects::allEffects()` displays model predictions (fitted values)
 
-```r
+<!-- end list -->
+
+``` r
 #3. `sjPlot::plot_model()` plots the coefficients, while `effects::allEffects()` displays model predictions (fitted values)
 
 library(sjPlot)
 plot_model(num2_m)
 ```
 
-![](visualize_regressions_files/figure-html/num_2_3-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/num_2_3-1.png)<!-- -->
 
+# 5\. Multiple linear model with one categorical and one numeric predictor
 
-# 5. Multiple linear model with one categorical and one numeric predictor {#multiple_plots}
+1.  the plot() args can be modified to make the plots less cramped
 
-1. the plot() args can be modified to make the plots less cramped 
+<!-- end list -->
 
-```r
+``` r
 # 5. multiple linear model with one categorical and one numeric predictor
 cat_num_m <- lm(salary ~ age + education, d)
 
@@ -4451,47 +4464,60 @@ cat_num_m <- lm(salary ~ age + education, d)
 plot(allEffects(cat_num_m))
 ```
 
-![](visualize_regressions_files/figure-html/cat_num_1-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/cat_num_1-1.png)<!-- -->
 
-```r
+``` r
 plot(allEffects(cat_num_m), rows = 2, cols = 1)
 ```
 
-![](visualize_regressions_files/figure-html/cat_num_1-2.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/cat_num_1-2.png)<!-- -->
 
-2. `plot_model()` arguments can be tweaked to display coefficient values and their significance
+2.  `plot_model()` arguments can be tweaked to display coefficient
+    values and their significance
 
-```r
+<!-- end list -->
+
+``` r
 # `sjPlot::plot_model()` plots the coefficients, while `effects::allEffects()` displays model predictions (fitted values)
 # plot_model(cat_num_m)
 plot_model(cat_num_m, show.values = T)
 ```
 
-![](visualize_regressions_files/figure-html/cat_num_2-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/cat_num_2-1.png)<!-- -->
 
 # Bonus 1: check all the model assumptions and performance in one multi-plot figure
-1. the VIF (y-axis in the multicollinearity plot) should be below 5 for factors and below 10 for interactions 
 
+1.  the VIF (y-axis in the multicollinearity plot) should be below 5 for
+    factors and below 10 for interactions
 
-```r
+<!-- end list -->
+
+``` r
 # bonus 1: check all the model assumptions and performance in one multi-plot figure; 
 # alternative to base::plot(model_name)
 library(performance)
 check_model(cat_num_m)
 ```
 
-![](visualize_regressions_files/figure-html/bonus_1-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/bonus_1-1.png)<!-- -->
 
-```r
+``` r
 # the VIF (y-axis in the multicollinearity plot) should be below 5 for factors and below 10 for interactions 
 ```
 
-# 6. Multiple linear model with interactions
+# 6\. Multiple linear model with interactions
+
 ## Only the way `allEffects()` & `lm()` display their results differs, the underlying estimates (coefficients) are same
-1. irrespective of the displayed values, all the effects (i.e. pairwise difference relative to baseline) are identical for `lm()` and `allEffects()`. Even the estimate (i.e. the coefficient) of the first level of the first factor is different. Compare with the point 4 of the [notes on categorical models]{#cat2.1} 
 
+1.  irrespective of the displayed values, all the effects (i.e. pairwise
+    difference relative to baseline) are identical for `lm()` and
+    `allEffects()`. Even the estimate (i.e. the coefficient) of the
+    first level of the first factor is different. Compare with the point
+    4 of the <span id="cat2.1">notes on categorical models</span>
 
-```r
+<!-- end list -->
+
+``` r
 # 6. multiple linear model with interactions
 inter_m <- lm(salary ~ jobclass * education, d)
 
@@ -4506,7 +4532,6 @@ inter_m <- lm(salary ~ jobclass * education, d)
 inter_m %>% allEffects() %>% pluck("jobclass:education") %>% as_tibble() %>% gt() %>% tab_header(data = ., title = "job*education_allEffects")
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -4947,13 +4972,11 @@ inter_m %>% allEffects() %>% pluck("jobclass:education") %>% as_tibble() %>% gt(
   
   
 </table></div>
-```
 
-```r
+``` r
 inter_m %>% tidy() %>% gt() %>% tab_header(data = ., title = "job*education_lm")
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -5383,55 +5406,69 @@ inter_m %>% tidy() %>% gt() %>% tab_header(data = ., title = "job*education_lm")
   
   
 </table></div>
-```
 
-2. `allEffects()` recognizes when a model contains an interaction: it produces conjoined subplots (facets); compare with [output of the additive model]{#multiple_plots}, where the plot was not conjoined (not faceted)
+2.  `allEffects()` recognizes when a model contains an interaction: it
+    produces conjoined subplots (facets); compare with
+    <span id="multiple_plots">output of the additive model</span>, where
+    the plot was not conjoined (not faceted)
 
-```r
+<!-- end list -->
+
+``` r
 # `allEffects()` recognizes when a model contains an interaction: it produces conjoined subplots (facets); 
 # compare with output of the additive model, where the plot was not conjoined (not faceted)
 plot(allEffects(inter_m))
 ```
 
-![](visualize_regressions_files/figure-html/inter_2-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/inter_2-1.png)<!-- -->
 
-3. `allEffects()` can also be used to produce conventional interaction plots where multiple predictors are displayed in the same plot rather than in facets and their respective levels are joined by a line 
+3.  `allEffects()` can also be used to produce conventional interaction
+    plots where multiple predictors are displayed in the same plot
+    rather than in facets and their respective levels are joined by a
+    line
 
-```r
+<!-- end list -->
+
+``` r
 # includes the lines for both the variables in the same facet rather than in conjoined facets
 plot(allEffects(inter_m), lines = list(multiline = T))
 ```
 
-![](visualize_regressions_files/figure-html/inter_3-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/inter_3-1.png)<!-- -->
 
-```r
+``` r
 # remakes the above plot with CIs
 plot(allEffects(inter_m),
      lines = list(multiline = T),
      confint = list(style = "auto"))
 ```
 
-![](visualize_regressions_files/figure-html/inter_3-2.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/inter_3-2.png)<!-- -->
 
-```r
+``` r
 #an alternative to above
 plot_model(inter_m, type = "int")
 ```
 
-![](visualize_regressions_files/figure-html/inter_3-3.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/inter_3-3.png)<!-- -->
 
 # Bonus 2: post-hoc comparisons
-1. We use the `emmeans` package for this. Marginal means are also called least-squares means.
-2. By tweaking the formula inside `emmeans()`, diverse comparisons, both between & along the lines, become possible
-3. Multiple comparisons are made by controlling the false discovery rate (aka Benjamini-Hochberg correction)
 
-```r
+1.  We use the `emmeans` package for this. Marginal means are also
+    called least-squares means.
+2.  By tweaking the formula inside `emmeans()`, diverse comparisons,
+    both between & along the lines, become possible
+3.  Multiple comparisons are made by controlling the false discovery
+    rate (aka Benjamini-Hochberg correction)
+
+<!-- end list -->
+
+``` r
 library(emmeans)
 #compare job classes within every education level: between lines
 emmeans(inter_m, pairwise ~ jobclass | education, adjust = "fdr")$contrasts %>% tidy() %>% gt()
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -5843,14 +5880,12 @@ emmeans(inter_m, pairwise ~ jobclass | education, adjust = "fdr")$contrasts %>% 
   
   
 </table></div>
-```
 
-```r
+``` r
 #compare education levels within a job class: along lines
 emmeans(inter_m, pairwise ~ education | jobclass, adjust = "fdr")$contrasts %>% tidy() %>% gt()
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -6427,14 +6462,12 @@ emmeans(inter_m, pairwise ~ education | jobclass, adjust = "fdr")$contrasts %>% 
   
   
 </table></div>
-```
 
-```r
+``` r
 #compare every category to every other category
 emmeans(inter_m, pairwise ~ education * jobclass, adjust = "fdr")$contrasts %>% tidy() %>% gt()
 ```
 
-```{=html}
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -7240,14 +7273,21 @@ emmeans(inter_m, pairwise ~ education * jobclass, adjust = "fdr")$contrasts %>% 
   
   
 </table></div>
-```
 
-# 7. Multiple linear model with interaction between one categorical and one numeric predictor
-1. Setting `confint = list(style = "auto")` gives smooth CIs across the numeric predictors
-2. `plot_model()` can also be used to make interaction plots. Its advantage over the `allEffects()` option is that it follows `ggplot2` synta and therefore layers can be added to it.
-3. `check_model()` reveals that `health` is correlated with `age:health`, which should be expected since it is a part of the interaction. However, any correlation below 20 is acceptable.
+# 7\. Multiple linear model with interaction between one categorical and one numeric predictor
 
-```r
+1.  Setting `confint = list(style = "auto")` gives smooth CIs across the
+    numeric predictors
+2.  `plot_model()` can also be used to make interaction plots. Its
+    advantage over the `allEffects()` option is that it follows
+    `ggplot2` synta and therefore layers can be added to it.
+3.  `check_model()` reveals that `health` is correlated with
+    `age:health`, which should be expected since it is a part of the
+    interaction. However, any correlation below 20 is acceptable.
+
+<!-- end list -->
+
+``` r
 # 7. multiple linear model with interaction between one categorical and one numeric predictor
 cat_num_inter <- lm(salary ~ age * health, d)
 
@@ -7257,40 +7297,47 @@ plot(
   confint = list(style = "auto"))
 ```
 
-![](visualize_regressions_files/figure-html/cat_num_inter-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/cat_num_inter-1.png)<!-- -->
 
-```r
+``` r
 plot_model(cat_num_inter, type = "int") + 
   theme_classic() +
   theme(legend.position = "top") +
   xlab("something different")
 ```
 
-![](visualize_regressions_files/figure-html/cat_num_inter-2.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/cat_num_inter-2.png)<!-- -->
 
-```r
+``` r
 check_model(cat_num_inter)
 ```
 
-![](visualize_regressions_files/figure-html/cat_num_inter-3.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/cat_num_inter-3.png)<!-- -->
 
-# Bonus 3: make quick non-linear models with ggplot::geom_smooth()
+# Bonus 3: make quick non-linear models with ggplot::geom\_smooth()
 
-```r
+``` r
 ggplot(d, aes(age, salary)) +
   geom_point() +
   geom_smooth() + # the quickest way to buld a GAM for numeric data
   facet_grid(jobclass~health) # quick multiple model visualization
 ```
 
-![](visualize_regressions_files/figure-html/ggplot_gam-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/ggplot_gam-1.png)<!-- -->
 
-# 8. Multiple non-linear polynomial model with interactions
-1. We logarithmize `salary`, use polynomial function of `age`, and check for interaction with `health. This helps to reduce VIF between the interaction terms as well as to normalize the residuals as revealed by `check_model()`
-2. As usual `allEffects()` can be used to plot the model; the `multiline` argument shows the effects of both the first and second degrees of the polynomial on the same plot.
+# 8\. Multiple non-linear polynomial model with interactions
 
+1.  We logarithmize `salary`, use polynomial function of `age`, and
+    check for interaction with `health. This helps to reduce VIF between
+    the interaction terms as well as to normalize the residuals as
+    revealed by`check\_model()\`
+2.  As usual `allEffects()` can be used to plot the model; the
+    `multiline` argument shows the effects of both the first and second
+    degrees of the polynomial on the same plot.
 
-```r
+<!-- end list -->
+
+``` r
 polynomial_m <- lm(log(salary) ~ poly(age, 2) * health, d)
 
 plot(
@@ -7300,142 +7347,142 @@ plot(
 )
 ```
 
-![](visualize_regressions_files/figure-html/polynomial-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/polynomial-1.png)<!-- -->
 
-```r
+``` r
 plot_model(polynomial_m, show.values = T)
 ```
 
-![](visualize_regressions_files/figure-html/polynomial-2.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/polynomial-2.png)<!-- -->
 
-```r
+``` r
 check_model(polynomial_m)
 ```
 
-![](visualize_regressions_files/figure-html/polynomial-3.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/polynomial-3.png)<!-- -->
 
-# 9. Multiple non-linear Generalized Additive Models (GAMs)
-1. A GAM cuts the x-axis into several pieces and plots a simple linear model to every piece and then it connects the pieces. `ggplot::geom_smooth()` also does this.
-2. The GAM recapitulates the recession of 2007-2008 when plotting the effect of `year`. A simple linear model would miss this.
+# 9\. Multiple non-linear Generalized Additive Models (GAMs)
 
+1.  A GAM cuts the x-axis into several pieces and plots a simple linear
+    model to every piece and then it connects the pieces.
+    `ggplot::geom_smooth()` also does this.
+2.  The GAM recapitulates the recession of 2007-2008 when plotting the
+    effect of `year`. A simple linear model would miss this.
 
+# 10\. mulitple logisitc regression with interactions
 
-# 10. mulitple logisitc regression with interactions
-The model measures the probability of being in good health depending on job class and health insurance. All three `jobclass` and `health_ins` and `health` are categorical variables. Since `health` is also binomial, the model outcome is specified by setting the `family = binomial`.
+The model measures the probability of being in good health depending on
+job class and health insurance. All three `jobclass` and `health_ins`
+and `health` are categorical variables. Since `health` is also binomial,
+the model outcome is specified by setting the `family = binomial`.
 
-```r
+``` r
 logistic_m <- glm(health ~ jobclass * health_ins, d, family = binomial)
 
 plot(allEffects(logistic_m))
 ```
 
-![](visualize_regressions_files/figure-html/logistic-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/logistic-1.png)<!-- -->
 
-```r
+``` r
 plot_model(logistic_m, type = "int")
 ```
 
-![](visualize_regressions_files/figure-html/logistic-2.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/logistic-2.png)<!-- -->
 
-```r
+``` r
 emmeans(logistic_m, pairwise ~ jobclass | health_ins, adjust = "fdr")$contrasts
 ```
 
-```
-## health_ins = 1. Yes:
-##  contrast                       estimate    SE  df z.ratio p.value
-##  1. Industrial - 2. Information  -0.0553 0.177 Inf -0.312  0.7552 
-## 
-## health_ins = 2. No:
-##  contrast                       estimate    SE  df z.ratio p.value
-##  1. Industrial - 2. Information  -0.1830 0.241 Inf -0.760  0.4472 
-## 
-## Results are given on the log odds ratio (not the response) scale.
-```
+    ## health_ins = 1. Yes:
+    ##  contrast                       estimate    SE  df z.ratio p.value
+    ##  1. Industrial - 2. Information  -0.0553 0.177 Inf -0.312  0.7552 
+    ## 
+    ## health_ins = 2. No:
+    ##  contrast                       estimate    SE  df z.ratio p.value
+    ##  1. Industrial - 2. Information  -0.1830 0.241 Inf -0.760  0.4472 
+    ## 
+    ## Results are given on the log odds ratio (not the response) scale.
 
-```r
+``` r
 emmeans(logistic_m, pairwise ~  health_ins | jobclass, adjust = "fdr")$contrasts
 ```
 
-```
-## jobclass = 1. Industrial:
-##  contrast       estimate    SE  df z.ratio p.value
-##  1. Yes - 2. No    0.623 0.200 Inf 3.117   0.0018 
-## 
-## jobclass = 2. Information:
-##  contrast       estimate    SE  df z.ratio p.value
-##  1. Yes - 2. No    0.495 0.222 Inf 2.228   0.0259 
-## 
-## Results are given on the log odds ratio (not the response) scale.
-```
+    ## jobclass = 1. Industrial:
+    ##  contrast       estimate    SE  df z.ratio p.value
+    ##  1. Yes - 2. No    0.623 0.200 Inf 3.117   0.0018 
+    ## 
+    ## jobclass = 2. Information:
+    ##  contrast       estimate    SE  df z.ratio p.value
+    ##  1. Yes - 2. No    0.495 0.222 Inf 2.228   0.0259 
+    ## 
+    ## Results are given on the log odds ratio (not the response) scale.
 
-```r
+``` r
 emmeans(logistic_m, pairwise ~  health_ins * jobclass, adjust = "fdr")$contrasts
 ```
 
-```
-##  contrast                                     estimate    SE  df z.ratio
-##  1. Yes 1. Industrial - 2. No 1. Industrial     0.6232 0.200 Inf  3.117 
-##  1. Yes 1. Industrial - 1. Yes 2. Information  -0.0553 0.177 Inf -0.312 
-##  1. Yes 1. Industrial - 2. No 2. Information    0.4402 0.226 Inf  1.950 
-##  2. No 1. Industrial - 1. Yes 2. Information   -0.6785 0.196 Inf -3.460 
-##  2. No 1. Industrial - 2. No 2. Information    -0.1830 0.241 Inf -0.760 
-##  1. Yes 2. Information - 2. No 2. Information   0.4954 0.222 Inf  2.228 
-##  p.value
-##  0.0055 
-##  0.7552 
-##  0.0768 
-##  0.0032 
-##  0.5367 
-##  0.0518 
-## 
-## Results are given on the log odds ratio (not the response) scale. 
-## P value adjustment: fdr method for 6 tests
-```
+    ##  contrast                                     estimate    SE  df z.ratio
+    ##  1. Yes 1. Industrial - 2. No 1. Industrial     0.6232 0.200 Inf  3.117 
+    ##  1. Yes 1. Industrial - 1. Yes 2. Information  -0.0553 0.177 Inf -0.312 
+    ##  1. Yes 1. Industrial - 2. No 2. Information    0.4402 0.226 Inf  1.950 
+    ##  2. No 1. Industrial - 1. Yes 2. Information   -0.6785 0.196 Inf -3.460 
+    ##  2. No 1. Industrial - 2. No 2. Information    -0.1830 0.241 Inf -0.760 
+    ##  1. Yes 2. Information - 2. No 2. Information   0.4954 0.222 Inf  2.228 
+    ##  p.value
+    ##  0.0055 
+    ##  0.7552 
+    ##  0.0768 
+    ##  0.0032 
+    ##  0.5367 
+    ##  0.0518 
+    ## 
+    ## Results are given on the log odds ratio (not the response) scale. 
+    ## P value adjustment: fdr method for 6 tests
 
 # Bonus 4: visualize the post-hoc analysis with the Pairwise P-value Plot
 
-```r
+``` r
 pwpp(emmeans(logistic_m, ~  health_ins * jobclass), type = "response", adjust = "fdr") + theme_minimal()
 ```
 
-![](visualize_regressions_files/figure-html/pwpp-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/pwpp-1.png)<!-- -->
 
-# 11. Multinomial logistic regression models via neural networks
-For categorical response variables with more than two categories we perform multinomial regression.
+# 11\. Multinomial logistic regression models via neural networks
 
-```r
+For categorical response variables with more than two categories we
+perform multinomial regression.
+
+``` r
 d <- foreign::read.dta("https://stats.idre.ucla.edu/stat/data/hsbdemo.dta")
 
 multinomial_m <- nnet::multinom(prog ~ ses + write, d)
 ```
 
-```
-## # weights:  15 (8 variable)
-## initial  value 219.722458 
-## iter  10 value 179.985215
-## final  value 179.981726 
-## converged
-```
+    ## # weights:  15 (8 variable)
+    ## initial  value 219.722458 
+    ## iter  10 value 179.985215
+    ## final  value 179.981726 
+    ## converged
 
-```r
+``` r
 # for a predictor, the curve of each response category can be plotted separately or in the same plot
 plot(allEffects(multinomial_m))
 ```
 
-![](visualize_regressions_files/figure-html/multinomial-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/multinomial-1.png)<!-- -->
 
-```r
+``` r
 plot(allEffects(multinomial_m),
   lines = list(multiline = T),
   confint = list(style = "auto"))
 ```
 
-![](visualize_regressions_files/figure-html/multinomial-2.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/multinomial-2.png)<!-- -->
 
-# 12. Multiple Linear Mixed-Effects-Model with interactions
+# 12\. Multiple Linear Mixed-Effects-Model with interactions
 
-```r
+``` r
 library(lme4)
 library(lmerTest)
 set.seed(9)
@@ -7451,71 +7498,69 @@ linear_m <- lm(y ~service * studage, data = d) #for ANOVA in Bonus 5
 plot(allEffects(mixed_m))
 ```
 
-![](visualize_regressions_files/figure-html/lmer-1.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/lmer-1.png)<!-- -->
 
-```r
+``` r
 plot(
   allEffects(mixed_m),
   lines = list(multiline = T),
   confint = list(style = "auto"))
 ```
 
-![](visualize_regressions_files/figure-html/lmer-2.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/lmer-2.png)<!-- -->
 
-```r
+``` r
 # post-hocs
 emmeans(mixed_m, pairwise ~ service | studage, adjust = "none")$contrasts
 ```
 
-```
-## studage = 2:
-##  contrast estimate    SE  df t.ratio p.value
-##  0 - 1       0.447 0.186 787 2.404   0.0164 
-## 
-## studage = 4:
-##  contrast estimate    SE  df t.ratio p.value
-##  0 - 1       0.183 0.186 783 0.983   0.3261 
-## 
-## studage = 6:
-##  contrast estimate    SE  df t.ratio p.value
-##  0 - 1       0.120 0.184 785 0.650   0.5156 
-## 
-## studage = 8:
-##  contrast estimate    SE  df t.ratio p.value
-##  0 - 1       0.344 0.185 782 1.858   0.0635 
-## 
-## Degrees-of-freedom method: kenward-roger
-```
+    ## studage = 2:
+    ##  contrast estimate    SE  df t.ratio p.value
+    ##  0 - 1       0.447 0.186 787 2.404   0.0164 
+    ## 
+    ## studage = 4:
+    ##  contrast estimate    SE  df t.ratio p.value
+    ##  0 - 1       0.183 0.186 783 0.983   0.3261 
+    ## 
+    ## studage = 6:
+    ##  contrast estimate    SE  df t.ratio p.value
+    ##  0 - 1       0.120 0.184 785 0.650   0.5156 
+    ## 
+    ## studage = 8:
+    ##  contrast estimate    SE  df t.ratio p.value
+    ##  0 - 1       0.344 0.185 782 1.858   0.0635 
+    ## 
+    ## Degrees-of-freedom method: kenward-roger
 
-```r
+``` r
 pwpp(emmeans(mixed_m, ~ service * studage), type = "response", adjust = "none") + theme_minimal()
 ```
 
-![](visualize_regressions_files/figure-html/lmer-3.png)<!-- -->
+![](visualize_regressions_files/figure-gfm/lmer-3.png)<!-- -->
 
 # Bonus 5: how to choose the best model
+
 Compare AIC & BIC obtained from between-model ANOVA: lower is better.
 
-```r
+``` r
 anova(mixed_m, linear_m)
 ```
 
-```
-## Data: d
-## Models:
-## linear_m: y ~ service * studage
-## mixed_m: y ~ service * studage + (1 | s) + (1 | d)
-##          npar    AIC    BIC  logLik deviance  Chisq Df Pr(>Chisq)    
-## linear_m    9 2702.0 2744.2 -1342.0   2684.0                         
-## mixed_m    11 2688.7 2740.2 -1333.3   2666.7 17.389  2  0.0001675 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
+    ## Data: d
+    ## Models:
+    ## linear_m: y ~ service * studage
+    ## mixed_m: y ~ service * studage + (1 | s) + (1 | d)
+    ##          npar    AIC    BIC  logLik deviance  Chisq Df Pr(>Chisq)    
+    ## linear_m    9 2702.0 2744.2 -1342.0   2684.0                         
+    ## mixed_m    11 2688.7 2740.2 -1333.3   2666.7 17.389  2  0.0001675 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-# 13. GAMMs - Multiple Generalised Additive Mixed Effects Models
+# 13\. GAMMs - Multiple Generalised Additive Mixed Effects Models
+
 A GAM with random effects in it
 
-```r
+``` r
 library(mgcViz)
 
 gamm_m <- gammV(y ~ s(as.numeric(d), k = 3), random = list(s = 1), data = InstEval %>% slice(1:5000)) 
@@ -7523,10 +7568,11 @@ gamm_m <- gammV(y ~ s(as.numeric(d), k = 3), random = list(s = 1), data = InstEv
 plot(gamm_m, allTerms = T)
 ```
 
-# 14. Kaplan-Meir survival model
+# 14\. Kaplan-Meir survival model
+
 Survival models have two response variables: time and event
 
-```r
+``` r
 # install.packages("survival")
 # install.packages("survminer")
 library("survival")
@@ -7553,10 +7599,16 @@ pairwise_survdiff(
 )
 ```
 
-# 15. Exponential Parametric Models
-Unlike Kapaln-Meir models, these fit smooth exponential (thus parametirc) curves to the survival data so that you can make predictions about survival at different time points. This cannot be done with the Kaplan-Meir curves due to their step-wise nature (the steps assume that if since nobody dies between two events the probability of survival does not change--which is unrealistic).
+# 15\. Exponential Parametric Models
 
-```r
+Unlike Kapaln-Meir models, these fit smooth exponential (thus
+parametirc) curves to the survival data so that you can make predictions
+about survival at different time points. This cannot be done with the
+Kaplan-Meir curves due to their step-wise nature (the steps assume that
+if since nobody dies between two events the probability of survival does
+not change–which is unrealistic).
+
+``` r
 library(flexsurv) # for parametric survival modelling
 
 survival_exp_m <- flexsurvreg(Surv(time, status) ~ factor(ph.ecog), data = d, dist = "exponential")
@@ -7564,14 +7616,15 @@ survival_exp_m <- flexsurvreg(Surv(time, status) ~ factor(ph.ecog), data = d, di
 ggsurvplot(survival_exp_m)
 ```
 
-# 16. Cox proportional hazard models
-Unlike Kapaln-Meir models, Cox models allow including multiple predictors in the model
+# 16\. Cox proportional hazard models
 
-```r
+Unlike Kapaln-Meir models, Cox models allow including multiple
+predictors in the model
+
+``` r
 cox_m <- coxph(Surv(time, status) ~ age + sex + ph.ecog, data = d)
 
 #get a forest plot ranking the different predictors along with their effect sizes
 #It also shows the global p-value for the model and its AIC
 ggforest(cox_m, data = d)
 ```
-

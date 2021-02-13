@@ -5,10 +5,12 @@ output:
   #   toc: yes
   # word_document:
   #   toc: yes
-  html_document:
-    toc: yes
-    toc_float: yes
-    keep_md: yes
+  # html_document:
+  #   toc: yes
+  #   toc_float: yes
+  #   keep_md: yes #renders on GitHub but with an ugly YAML table on top
+    github_document:
+    toc: true #does not render floating toc
 editor_options:
   chunk_output_type: console
 ---
