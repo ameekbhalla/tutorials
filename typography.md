@@ -38,7 +38,7 @@ output:
 
 -   line length: 45--90 characters or 2--3 alphabets
 
--   line spacing: 120--145% of the point size Use the line-height property, preferably without units ([here's why](https://stackoverflow.com/questions/20695333/why-does-unitless-line-height-behave-differently-from-percentage-or-em-in-this-e/20818206#20818206))
+-   line spacing: 120--145% of the point size Use the line-height property, preferably without units (here's why <https://stackoverflow.com/questions/20695333/why-does-unitless-line-height-behave-differently-from-percentage-or-em-in-this-e/20818206#20818206>)
 
 -   Use either first-line indent or space between paragraphs, not both.
     A space equal to 50--100% of the body text size will usually suffice.
@@ -50,8 +50,7 @@ output:
 
     -   CSS: Use the margin-top and margin-bottom properties
 
--   [Use paragraph and character styles](https://practicaltypography.com/paragraph-and-character-styles.html#why-you-should-care-about-styles).
-    CSS doesn't make a distinction between these two kinds of styles, but it's analogous to styles applied to inline elements (like `<em>`) vs. block-level elements (like `<div>`).
+-   Use paragraph and character styles: <https://practicaltypography.com/paragraph-and-character-styles.html#why-you-should-care-about-styles> CSS doesn't make a distinction between these two kinds of styles, but it's analogous to styles applied to inline elements (like `<em>`) vs. block-level elements (like `<div>`).
 
 -   Use 'page break before', 'keep lines together' and 'keep with next paragraph' options on headings.
     Incorporate them into paragraph and character styles.
