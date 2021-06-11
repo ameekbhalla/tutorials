@@ -1,0 +1,173 @@
+---
+title: "Practical Typography"
+output:
+  # pdf_document:
+  #   toc: yes
+  # word_document:
+  #   toc: yes
+  html_document:
+    toc: yes
+    toc_float: yes
+    keep_md: yes #renders on GitHub but with an ugly YAML table on top
+  # github_document:
+  #   toc: true #does not render floating toc
+---
+
+## Font
+
+-   Most professional fonts are delivered in the OpenType format (.otf extension) or the TrueType format (.ttf extension).
+    Microsoft Office on Windows, for various historical reasons, still does better with TrueType fonts.
+
+    -   Windows: Start menu → Control Panel → Fonts.
+        This will open a folder with all your installed fonts.
+        Drag your new fonts into this folder.
+        (To remove fonts, delete font files from this same folder.)
+
+    -   CSS: once you have access to the file, you establish a name for the font in your CSS with the \@font-face declaration.
+        After that, you can incorporate it into any of your CSS styles using the font-family property.
+
+-   Used monospaced font only for code; prefer Fira Mono instead of Courier
+
+## Layout
+
+-   set up the body text first.
+    Start with font, point size, line spacing, and line length, because those four decisions will largely determine how the body text will look.
+
+-   Because they determine the maximum width of the text block, page margins have the greatest effect on line length.
+    (Point size also affects line length, though more finely.) As page margins increase, line length decreases, and vice versa.
+
+-   line length: 45--90 characters or 2--3 alphabets
+
+-   line spacing: 120--145% of the point size\
+    Use the line-height property, preferably without units (here's why <https://stackoverflow.com/questions/20695333/why-does-unitless-line-height-behave-differently-from-percentage-or-em-in-this-e/20818206#20818206>)
+
+-   Use either first-line indent or space between paragraphs, not both.
+    A space equal to 50--100% of the body text size will usually suffice.
+    The larger the point size, the more space you'll need between paragraphs to make a visible difference.
+    Set only the space-after option; use space-before only with block quotes.
+
+    -   Word: Right-click in the text and select Paragraph → Indents and Spacing.
+        Under Spacing, in the box next to After, enter the measurement.
+
+    -   CSS: Use the margin-top and margin-bottom properties
+
+-   Use paragraph and character styles: <https://practicaltypography.com/paragraph-and-character-styles.html#why-you-should-care-about-styles>\
+    CSS doesn't make a distinction between these two kinds of styles, but it's analogous to styles applied to inline elements (like \<em\>) vs. block-level elements (like \<div\>).
+
+-   Use 'page break before', 'keep lines together' and 'keep with next paragraph' options on headings.
+    Incorporate them into paragraph and character styles.
+
+-   Use spaces above and below a heading, as a form of emphasis.
+    If you're already using space between paragraphs, the space you add around a heading should be larger, to create a distinction.
+    How much space to add is a judgment call.
+    Semantically, headings relate to the text that follows, not the text before.
+    Thus you'll probably want the space below to be smaller than the space above so the heading is visually closer to the text it introduces.
+
+    -   CSS: Use the margin-top and margin-bottom properties
+
+-   justified text: Best when line length is short, for example in a two column lay out, but then hyphenation is required to prevent large spaces between words; avoid on web
+
+-   automatic hyphenation is optional for left-aligned text Because the rag will still be somewhat irregular, even with hyphenation.
+    As line length gets shorter, hyphenation becomes essential.
+    Why?
+    With hyphenation off, your word processor or web browser can only break lines at word spaces.
+    As the lines get shorter, there are fewer words and hence fewer possible break points in each line, making awkward breaks more likely.
+    How to turn hyphenation on (or off).
+    Suppress automatic hyphenation for headings since they are relatively short; use paragraph and character styles to do so.
+
+    -   Word: Page Layout → Page Setup panel → Hyphenation → Automatic (or None)
+
+    -   CSS: Use hyphens: auto, though support is still spotty
+
+-   responsive web design [\<https://practicaltypography.com/responsive-web-design.html\>](https://practicaltypography.com/responsive-web-design.html){.uri}
+
+## Formatting
+
+-   mixing fonts: in a research paper, try one font for body text and one font for headings.
+    Or try one font for things in the center of the document (body text and headings) and one font for things at the edges (line numbers, footer, and other miscellany).
+
+-   Prefer lining figures for both heading and body
+
+-   the default figures on many fonts---especially system fonts---are tabular lining figures, so they can move easily from your word-processing document to your spreadsheet.
+    Check if the figures are tabular by typing a series of zeroes and ones and seeing if they line up.\
+    In body text, proportional figures are preferred because they tend to have more even spacing and a more consistent appearance.
+    But tabular figures are essential for one purpose: vertically aligned columns, like you find in grids of numbers.
+
+-   letterspacing: Use 5--12% extra space with caps, but not with lowercase
+
+    -   Word: Right-click in the text and select Font from the menu.
+        Click the Advanced tab.
+        On the line that says Spacing, in the box on the right, enter the amount of letterspacing.
+        Letterspacing in Word is measured in points.
+        Use 0.6--1.4 points of letterspacing for every 12 points of point size (this corresponds to 5--12%).
+
+    -   CSS: Set the letter-spacing property in the range 0.05em to 0.12em (an em is 100% of the font size, so this is equivalent to 5--12%).
+
+-   Kerning: Always keep it on.
+    Kerning is the adjustment of specific pairs of letters to improve spacing and fit.
+    (It's distinct from letterspacing, which affects all pairs.)
+
+    -   Word: Right-click in the text and select Font from the menu.
+        Click the Advanced tab.
+        Check the box that says Kerning for fonts \_\_\_\_ Points and above.
+        Put the number 8 in the point-size box.
+
+    -   CSS: text-rendering: optimizeLegibility, and enable the OpenType feature kern
+
+-   point size: Smaller on paper; bigger on screen
+
+-   the em size of a font is the same as its point size.
+    Two fonts set at the same point size will appear to be different sizes if one occupies less space on its em.
+
+-   Headings are signposts for readers that reveal the structure of your argument.
+    Note that I didn't say the structure of your document.
+    Headings that announce every topic, subtopic, minitopic, and microtopic are exhausting.
+    If you write from an outline, that can be a good starting point for your headings, but don't stop there---simplify it further.
+    Limit yourself to three levels of headings [like Cureus; the title is not a heading; but the section header is].
+    Two is better.
+    Use bold and indent to distinguish heading levels; avoid underline, italics, and title case (all caps are only OK if the headings are less than one line long), .
+
+    -   Suppress hyphenation in headings, and use the keep lines together and keep with next paragraph options to prevent headings from breaking awkwardly.
+    -   Use tiered numbers for hierarchical headings: CSS will produce numbered headings by default if you use the \<ol\> (ordered list) tag, but tiered numbers require a little extra work---investigate the counter-increment property.
+
+-   Use italics to emphasize serif fonts and bold to emhasize san serif fonts
+
+-   web and email addresses are usually hidden from view behind hyperlinks
+
+-   ordinals: No superscripts
+
+-   "OpenType" fonts have layout features that allow type designers to add luxuries to their fonts---like alternate figures, small caps, ligatures, ordinals, and fractions.
+    Merely selecting an OpenType font doesn't make its features available.
+    Rather, your typesetting program also has to support the features you want to use.
+    How to activate OpenType features
+
+    -   Windows: Start menu → Control Panel → Fonts.
+        This will open a folder with all your installed fonts.
+        Drag your new fonts into this folder.
+        (To remove fonts, delete font files from this same folder.)
+
+    -   CSS: once you have access to the file, you establish a name for the font in your CSS with the \@font-face declaration.
+        After that, you can incorporate it into any of your CSS styles using the font-family property.
+
+## Symbols
+
+-   There are six important white-space characters: the word space, the nonbreaking space, the tab, the hard line break, the carriage return, and the hard page break.
+    In HTML any sequence of white-space characters will reduce to a single space, thus to achieve visible effects of one of the white space characters, you need to use explicit HTML formatting tags.
+
+-   Put a nonbreaking space before any numeric or alphabetic reference to prevent awkward breaks.
+    Also use a nonbreaking space after other abbreviated reference marks (Ex. A, Fig. 23), honorifics and titles (Sgt. Rock, Ms. Marvel), and trademark and copyright symbols.
+
+    -   Nonbreaking spaces can be inserted into HTML documents with the escape code  `&nbsp;`
+
+-   Use a carriage return only to start a new paragraph.
+    In HTML, you use a formatting tag [\<p\> ... \</p\>] to denote a paragraph---a carriage return has no visible effect.
+
+-   No hyphen is necessary in phrasal adjectives that begin with an adverb ending in -ly (it's a closely held company, not a closely-held company).
+    Nor is a hyphen necessary in multipart foreign terms or proper names used as adjectives (habeas corpus appeal on the Third Circuit docket, not habeas-corpus appeal on the Third-Circuit docket).
+
+-   en dash: It indicates a range of values (1880--1912, pages 330--39); it also denotes a connection or contrast between pairs of words (conservative--liberal split, Arizona--Nevada reciprocity, Sarbanes--Oxley Act).
+    in markdown insert with two hyphen symbols -- ; in windows insert with alt+0150; in html insert as --
+
+-   em dash: in markdown: --- ; in windowsalt 0151; in html ---
+
+-   math symbols: Use real symbols, not alphabetic characters in HTML: minus sign is - multiplication sign is × division sign is ÷ (many others are also supported)
