@@ -28,6 +28,9 @@ output:
 
 -   Use monospaced font only for code; prefer Fira Mono instead of Courier
 
+-   [Charter for body text](https://practicaltypography.com/charter.html) Matthew Butterick provided the OTF, TTF, and webfont files
+
+-   Matthew Butterick used Charter, Fira Sans, Fira Mono, and Cooper Hewitt (a Sans font) for his open-source software
 ## Layout
 
 -   set up the body text first.
